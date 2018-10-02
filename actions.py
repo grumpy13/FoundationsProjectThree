@@ -44,8 +44,12 @@ def create_club():
     #print ("----------------------------------------------------------------------------------")
     while num != "-1":
         if int(num) < len(population):
-            newClub.recruit_member(population[int(num)])
-            num = input()
+            if population[int(num)] not in newClub.members:
+                newClub.recruit_member(population[int(num)])
+                num = input()
+            else:
+                print ("Member already exists please try again:")
+                num = input()
         else:
             print ("Invalid number please try again:")
             num = input()
@@ -81,9 +85,13 @@ def join_clubs():
     while exit != True:
         for c in clubs:
             if ch.lower() == c.name.lower():
-                c.recruit_member(myself)
-                print("\n%s just joined %s " %(my_name, c.name))
-                exit = True
+                if myself not in c.members:
+                    c.recruit_member(myself)
+                    print("\n%s just joined %s " %(my_name, c.name))
+                    exit = True
+                else:
+                    print ("\nYou already joined this club!")
+                    exit = True
 
         if exit != True:
             ch = input("Invalid input please try again: \n")
